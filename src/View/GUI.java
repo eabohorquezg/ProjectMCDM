@@ -297,7 +297,9 @@ public class GUI extends javax.swing.JFrame {
         double [][]matrixcriteria = ahp.createMatrix(tableCriteria);        
         double [][]matrixalternatives = ahp.createMatrix(tableAlternatives);
         */
-        
+        PrometheeWindow prometheeWindow = new PrometheeWindow();
+        prometheeWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        prometheeWindow.setVisible(true);
     }//GEN-LAST:event_btnApplyPrometheeActionPerformed
 
     /**
