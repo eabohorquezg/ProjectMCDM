@@ -115,4 +115,10 @@ public class Criterion {
         }
         return ans;
     }
+
+    @Override
+    public String toString() {
+        return name + " " + type + " " + weight + " " + params.toString();
+    }
+    
 }
