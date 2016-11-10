@@ -17,6 +17,7 @@ public class Criterion {
     private final Map<String,Double> params;
     private String name;
     private double weight;
+    private boolean max;
     
     public Criterion(){
         type = 0;
@@ -118,7 +119,25 @@ public class Criterion {
 
     @Override
     public String toString() {
-        return name + " " + type + " " + weight + " " + params.toString();
+        String max = "max";
+        if(!this.max) max = "min";
+        return String.format("%-15s%-6s%-6s%-9s%-20s\n", name, type, weight, max, params);
+    }   
+
+    /**
+     * @return the max
+     */
+    public boolean isMax() {
+        return max;
     }
+
+    /**
+     * @param max the max to set
+     */
+    public void setMax(boolean max) {
+        this.max = max;
+    }
+    
+    
     
 }
