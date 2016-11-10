@@ -19,22 +19,23 @@ import java.util.Map;
 public class Promethee {
 
     private List<Criterion> criteria;
-    private double[][] alternatives;
     private PrometheeWindow prometheeWindow;
-
-    //private List<Alternative> alternatives;
+    private List<Alternative> alternatives;
+    
     public Promethee() {
         criteria = new ArrayList<>();
-        alternatives = new double[100][100];
+        alternatives = new ArrayList<>();
     }
 
-    public Promethee(List<Criterion> criteria, double[][] alternatives) {
+    public Promethee(List<Criterion> criteria, List<Alternative> alternatives) {
         this.criteria = criteria;
         this.alternatives = alternatives;
     }
 
     public List<Alternative> getTotalOrder() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        System.out.println(criteria);
+        System.out.println(alternatives);
+        return null;
     }
 
     public Map<Alternative, List<Alternative>> getPartialOrder() {
@@ -42,7 +43,7 @@ public class Promethee {
     }
 
     public void addCriterion(Criterion criterion) {
-        criteria.add(criterion);
+        getCriteria().add(criterion);
         updateView();
     }
 
@@ -54,12 +55,30 @@ public class Promethee {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("%-15s%-6s%-6s%-9s%-20s\n", "Nombre", "Tipo", "Peso", "Min/Max","Parámetros"));
         sb.append("------------------------------------------------------------\n");
-        criteria.stream().forEach((c) -> {
+        getCriteria().stream().forEach((c) -> {
             sb.append(c);
         });
         sb.append("------------------------------------------------------------\n");
         
         this.prometheeWindow.getjTextArea1().setText(sb.toString());
+    }
+
+    /**
+     * @return the criteria
+     */
+    public List<Criterion> getCriteria() {
+        return criteria;
+    }
+
+    /**
+     * @param criteria the criteria to set
+     */
+    public void setCriteria(List<Criterion> criteria) {
+        this.criteria = criteria;
+    }
+
+    public void addAlternative(Alternative alternative) {;
+        this.alternatives.add(alternative);
     }
 
 }
