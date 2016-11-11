@@ -7,10 +7,6 @@
 package View;
 
 import Model.AHP;
-import java.awt.BorderLayout;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
@@ -20,10 +16,10 @@ import javax.swing.table.TableColumnModel;
  * @author Edwin
  */
 
-public class GUI extends javax.swing.JFrame {
+public class AHPWindow extends javax.swing.JFrame {
 
-    public GUI() {
-        super("PROYECTO MCDM");
+    public AHPWindow() {
+        super("AHP");
         initComponents();
     }
 
@@ -48,7 +44,6 @@ public class GUI extends javax.swing.JFrame {
         btncreateCriteriaTable = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableCriteria = new javax.swing.JTable();
-        btnApplyPromethee = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,50 +107,33 @@ public class GUI extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tableCriteria);
 
-        btnApplyPromethee.setText("Aplicar Promethe");
-        btnApplyPromethee.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnApplyPrometheeActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelAlternatives, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(numAlternatives, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(31, 31, 31)
-                                .addComponent(btncreateAlternativesTable)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(34, 34, 34)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelCriteria)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btncreateCriteriaTable, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btncreateAlternativesTable))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelCriteria)
+                            .addComponent(btncreateCriteriaTable, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(147, 147, 147)
+                .addGap(226, 226, 226)
                 .addComponent(btnfindAlternative)
-                .addGap(49, 49, 49)
-                .addComponent(btnApplyPromethee, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -178,9 +156,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnfindAlternative)
-                    .addComponent(btnApplyPromethee))
+                .addComponent(btnfindAlternative)
                 .addGap(23, 23, 23))
         );
 
@@ -216,7 +192,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btncreateAlternativesTableActionPerformed
 
     private void btnfindAlternativeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnfindAlternativeActionPerformed
-        // TODO add your handling code here:   
+        // TODO add your handling code here:                          
         AHP ahp = new AHP();
         double [][]matrixcriteria = ahp.createMatrix(tableCriteria);        
         double [][]matrixalternatives = ahp.createMatrix(tableAlternatives);
@@ -233,26 +209,9 @@ public class GUI extends javax.swing.JFrame {
                 matrixfinal[i][z] = priorityVector[i];                
             }
         }
-        double finalresult[] = ahp.calculateResult(matrixfinal, vectorPriorityCriteria, tableAlternatives);                                
-        showResultsWindow(ahp.getOutputlog());
+        double finalresult[] = ahp.calculateResult(matrixfinal, vectorPriorityCriteria, tableAlternatives);                                            
+        new AHPResultsWindow(ahp.getOutputlog(),finalresult);                
     }//GEN-LAST:event_btnfindAlternativeActionPerformed
- 
-    public static void showResultsWindow( String outputlog ){
-        JFrame ventana = new JFrame("Resultados");
-        ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        JTextArea jtx = new JTextArea(30,50);
-        jtx.append("**********************************************\n");
-        jtx.append("RESULTADOS: \n");
-        jtx.append("**********************************************\n\n");
-        jtx.append(outputlog);
-        jtx.setLineWrap(true);
-        jtx.setWrapStyleWord(true);
-        JScrollPane scroll = new JScrollPane(jtx);
-        ventana.getContentPane().add(scroll, BorderLayout.CENTER);
-        ventana.add(scroll);        
-        ventana.pack();
-        ventana.setVisible(true);    
-    }
         
     private String []arrayCriteria;    
     
@@ -291,53 +250,46 @@ public class GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tableCriteriaPropertyChange
 
-    private void btnApplyPrometheeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyPrometheeActionPerformed
-        /*
-        AHP ahp = new AHP();
-        double [][]matrixcriteria = ahp.createMatrix(tableCriteria);        
-        double [][]matrixalternatives = ahp.createMatrix(tableAlternatives);
-        */
-        
-    }//GEN-LAST:event_btnApplyPrometheeActionPerformed
-
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUI().setVisible(true);
-            }
-        });
-    }
+    
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(AHPWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(AHPWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(AHPWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(AHPWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                //new AHPWindow().setVisible(true);
+//            }
+//        });
+//    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnApplyPromethee;
     private javax.swing.JButton btncreateAlternativesTable;
     private javax.swing.JButton btncreateCriteriaTable;
     private javax.swing.JButton btnfindAlternative;

@@ -95,10 +95,10 @@ public class AHP {
     }
 
     public double[][] calculateMatrixPairwiseComparison( double criterion[], String []arrayCriteria, int numCriterion ){
-        outputlog += "--------------------------------------------\n";
-        outputlog += "CRITERIO : "+arrayCriteria[numCriterion].toUpperCase().split(":")[0]+"\n"; 
-        outputlog += "--------------------------------------------\n\n";
-        outputlog += "MATRIZ DE COMPARACION POR PARES - ALTERNATIVAS: \n\n";                
+        outputlog += "-----------------------------------------------------------------------------------------------\n";
+        outputlog += " CRITERIO : "+arrayCriteria[numCriterion].toUpperCase().split(":")[0]+"\n"; 
+        outputlog += "-----------------------------------------------------------------------------------------------\n\n";
+        outputlog += " MATRIZ DE COMPARACION POR PARES - ALTERNATIVAS: \n\n";                
         double value = 0,preferencelevel=0;
         double [][]MatrixPairwiseComparison = new double[criterion.length][criterion.length];                
         for (int i = 0; i < criterion.length; i++) {
@@ -134,8 +134,8 @@ public class AHP {
     }
     
     public double[] calculateResult( double matrixfinal[][], double vectorPriorityCriteria[] , JTable alternatives){
-        outputlog += "--------------------------------------------\n";        
-        outputlog += "VECTOR DE PRIORIDAD GLOBAL: \n\n";        
+        outputlog += "-----------------------------------------------------------------------------------------------\n";        
+        outputlog += " VECTOR DE PRIORIDAD GLOBAL: \n\n";        
         double finalresult[] = new double[alternatives.getRowCount()], acum = 0;
         for (int i = 0; i < alternatives.getRowCount(); i++) {
             for (int j = 0; j < alternatives.getColumnCount()-1; j++) {
