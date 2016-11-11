@@ -36,13 +36,29 @@ public class Alternative {
         this.name = name;
     }
 
-    public void addValue(double value){
-        this.values.add(value);
-    }
+    
     
     @Override
     public String toString() {
-        return name + " " + values ;
+        return name + " " + getValues() ;
+    }
+
+    /**
+     * @return the values
+     */
+    public List<Double> getValues() {
+        return values;
+    }
+
+    /**
+     * @param values the values to set
+     */
+    public void setValues(List<Double> values) {
+        this.values = values;
+    }
+
+    public void addValue(double parseDouble) {
+        this.values.add(parseDouble);
     }
     
 }

@@ -6,6 +6,9 @@ import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * Esta clase implementa el metodo de promethee, como entrada necesita.
@@ -21,20 +24,71 @@ public class Promethee {
     private List<Criterion> criteria;
     private PrometheeWindow prometheeWindow;
     private List<Alternative> alternatives;
+    private double [][] preferenceIndex;
+    private double []  posFlux;
+    private double [] negFlux;
+    
+    private double compare(Alternative a, Alternative b){
+        double ans = 0.0;
+        double tot = 0.0;
+        int i = 0;
+        for(Criterion c : criteria){
+            try {
+                ans+=c.compute(a.getValues().get(i), b.getValues().get(i))*c.getWeight();
+                tot+=c.getWeight();
+                i++;
+            } catch (Exception ex) {
+                Logger.getLogger(Promethee.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(prometheeWindow, ex.toString());
+            }
+        }
+        return ans/tot;
+    }
     
     public Promethee() {
+        preferenceIndex = new double[100][100];
+        posFlux = new double[100];
+        negFlux = new double[100];
         criteria = new ArrayList<>();
         alternatives = new ArrayList<>();
     }
 
     public Promethee(List<Criterion> criteria, List<Alternative> alternatives) {
+        this();
         this.criteria = criteria;
         this.alternatives = alternatives;
     }
 
+    public void computeFlows(){
+        //Computing preference indexes
+        int n = alternatives.size();
+        for(int i=0 ; i<n ; i++){
+            for(int j=0 ; j<n ; j++){
+                if(i==j) preferenceIndex[i][j] = 0.0;
+                else preferenceIndex[i][j] = compare(alternatives.get(i), alternatives.get(j));
+            }
+        }
+        
+        for(int i=0 ; i<n ; i++){
+            posFlux[i] = 0.0;
+            for(int j=0 ; j<n ; j++){
+                posFlux[i]+=getPreferenceIndex()[i][j];
+            }
+        }
+        
+        for(int i=0 ; i<n ; i++){
+            negFlux[i] = 0.0;
+            for(int j=0 ; j<n ; j++){
+                negFlux[i]+=getPreferenceIndex()[j][i];
+            }
+        }
+    }
+    
+    
     public List<Alternative> getTotalOrder() {
         System.out.println(criteria);
         System.out.println(getAlternatives());
+        computeFlows();
         return null;
     }
 
@@ -98,6 +152,27 @@ public class Promethee {
      */
     public void setAlternatives(List<Alternative> alternatives) {
         this.alternatives = alternatives;
+    }
+
+    /**
+     * @return the preferenceIndex
+     */
+    public double[][] getPreferenceIndex() {
+        return preferenceIndex;
+    }
+
+    /**
+     * @return the posFlux
+     */
+    public double[] getPosFlux() {
+        return posFlux;
+    }
+
+    /**
+     * @return the negFlux
+     */
+    public double[] getNegFlux() {
+        return negFlux;
     }
 
 }

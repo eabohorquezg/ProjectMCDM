@@ -74,7 +74,15 @@ public class Criterion {
     
     public double compute(double a1, double a2) throws Exception{
         double ans = 0.0;
+        
+        if(!max){
+            a1=-a1;
+            a2=-a2;
+        }
+        
         double x = a1-a2;
+        
+        if(x<0)return 0;
         
         switch(getType()){
             case 1:
