@@ -13,7 +13,7 @@ import java.util.Objects;
  *
  * @author mauricio
  */
-public class Alternative {
+public class Alternative implements Comparable<Alternative>{
     private String name;
     private List<Double> values;
     private double posFlux;
@@ -121,6 +121,13 @@ public class Alternative {
      */
     public void setNetFlux(double netFlux) {
         this.netFlux = netFlux;
+    }
+
+    @Override
+    public int compareTo(Alternative o) {
+        if(this.netFlux > o.netFlux) return -1;
+        else if(this.netFlux < o.netFlux ) return 1;
+        else return 0;
     }
     
 }

@@ -2,6 +2,8 @@ package Model;
 
 import View.PrometheeWindow;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
@@ -131,22 +133,11 @@ public class Promethee {
         List<Alternative> sorted = new ArrayList<>();
         computeFlows();
         
-        TreeMap<Double,Alternative> map = new TreeMap<>();
-        for(int i=0 ; i<this.alternatives.size() ; i++){
-            Alternative a = this.alternatives.get(i);
-            map.put(posFlux[i]-negFlux[i], a);
-        }
-        
-        ArrayList<Alternative> aux = new ArrayList<>();
-        
-        
-        map.entrySet().stream().forEach((e) -> {
-            aux.add(e.getValue());
+        alternatives.stream().forEach((a) -> {
+            sorted.add(a);
         });
         
-        for(int i=aux.size()-1 ; i>=0 ; i--){
-            sorted.add(aux.get(i));
-        }
+        Collections.sort(sorted);
         
         return sorted;
     }

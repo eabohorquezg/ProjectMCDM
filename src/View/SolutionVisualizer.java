@@ -173,7 +173,7 @@ public class SolutionVisualizer extends javax.swing.JFrame {
         sb.append("------------------------------------------------------------\n");
         
         totalOrder.stream().forEach((a) -> {
-            sb.append(String.format("%-15s%-16s%-16s%-16s\n", a.getName(), a.getNetFlux(), a.getPosFlux(), a.getNegFlux()));
+            sb.append(String.format("%-15s%-16.4f%-16.4f%-16.4f\n", a.getName(), a.getNetFlux(), a.getPosFlux(), a.getNegFlux()));
         });
         
         
