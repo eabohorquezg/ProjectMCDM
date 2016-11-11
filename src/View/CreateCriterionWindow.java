@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,6 +29,7 @@ public class CreateCriterionWindow extends javax.swing.JFrame {
     public CreateCriterionWindow() {
         initComponents();
         groupButtons();
+    
     }
 
     private void groupButtons(){
@@ -50,6 +52,9 @@ public class CreateCriterionWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         promethee.addCriterion(criterion);
+        DefaultTableModel defaultTableModel = (DefaultTableModel) promethee.getPrometheeWindow().getjTable1().getModel();
+        defaultTableModel.addColumn(criterion.getName());
+        promethee.updateView();
         return criterion;
     }
     

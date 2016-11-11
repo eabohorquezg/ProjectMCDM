@@ -34,7 +34,7 @@ public class Promethee {
 
     public List<Alternative> getTotalOrder() {
         System.out.println(criteria);
-        System.out.println(alternatives);
+        System.out.println(getAlternatives());
         return null;
     }
 
@@ -60,7 +60,7 @@ public class Promethee {
         });
         sb.append("------------------------------------------------------------\n");
         
-        this.prometheeWindow.getjTextArea1().setText(sb.toString());
+        this.getPrometheeWindow().getjTextArea1().setText(sb.toString());
     }
 
     /**
@@ -77,8 +77,27 @@ public class Promethee {
         this.criteria = criteria;
     }
 
-    public void addAlternative(Alternative alternative) {;
-        this.alternatives.add(alternative);
+    
+
+    /**
+     * @return the prometheeWindow
+     */
+    public PrometheeWindow getPrometheeWindow() {
+        return prometheeWindow;
+    }
+
+    /**
+     * @return the alternatives
+     */
+    public List<Alternative> getAlternatives() {
+        return alternatives;
+    }
+
+    /**
+     * @param alternatives the alternatives to set
+     */
+    public void setAlternatives(List<Alternative> alternatives) {
+        this.alternatives = alternatives;
     }
 
 }

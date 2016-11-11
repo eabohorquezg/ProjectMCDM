@@ -247,7 +247,7 @@ public class PrometheeWindow extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         List<Alternative> alternatives = new ArrayList<>();
-        DefaultTableModel defaultTableModel = (DefaultTableModel)jTable1.getModel();
+        DefaultTableModel defaultTableModel = (DefaultTableModel)getjTable1().getModel();
         
         for(int i=0 ; i<defaultTableModel.getRowCount() ; i++){
             Alternative alternative = new Alternative();
@@ -255,8 +255,10 @@ public class PrometheeWindow extends javax.swing.JFrame {
             for(int j=1 ; j<defaultTableModel.getColumnCount(); j++){
                 alternative.addValue(Double.parseDouble(defaultTableModel.getValueAt(i, j).toString()));
             }
-            promethee.addAlternative(alternative);
+            alternatives.add(alternative);
         }
+        promethee.setAlternatives(alternatives);
+        promethee.getTotalOrder();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -332,7 +334,7 @@ public class PrometheeWindow extends javax.swing.JFrame {
             defaultTableModel.addRow(aux);
         }
         
-        this.jTable1.setModel(defaultTableModel);
+        this.getjTable1().setModel(defaultTableModel);
     }
 
     private void setUpTable() {
@@ -357,7 +359,14 @@ public class PrometheeWindow extends javax.swing.JFrame {
  
        
         
-        this.jTable1.setModel(defaultTableModel);
+        this.getjTable1().setModel(defaultTableModel);
+    }
+
+    /**
+     * @return the jTable1
+     */
+    public javax.swing.JTable getjTable1() {
+        return jTable1;
     }
 
     
