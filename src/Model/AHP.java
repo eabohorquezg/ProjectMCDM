@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.math.BigDecimal;
 import javax.swing.JTable;
 
 /**
@@ -24,17 +25,13 @@ public class AHP {
         return outputlog;
     }
             
-    public double[][] createMatrix( JTable table ){
-        outputlog += "MATRIZ: \n\n";
+    public double[][] createMatrix( JTable table ){        
         double [][]matrix = new double[table.getRowCount()][table.getColumnCount()-1];
         for (int i = 0; i < table.getRowCount(); i++) {
             for (int j = 0; j < table.getColumnCount()-1; j++) {
-                matrix[i][j] = Double.parseDouble(table.getModel().getValueAt(i, j+1).toString());    
-                outputlog += String.valueOf(matrix[i][j])+"  ";
-            }
-            outputlog += "\n";
-        }
-        outputlog += "\n";
+                matrix[i][j] = Double.parseDouble(table.getModel().getValueAt(i, j+1).toString());                    
+            }            
+        }        
         return matrix;
     }
     
@@ -51,7 +48,7 @@ public class AHP {
         return sumcolumn;
     }
     
-    public double[] calculateRowAverage( double matrix[][], double sumcolumn[] ){
+    public double[] calculateRowAverage( double matrix[][], double sumcolumn[],String arrayCriteria[], boolean alternative ){
         double []average = new double[matrix.length];
         double acum = 0;
         for (int i = 0; i < matrix.length; i++) {
@@ -59,17 +56,20 @@ public class AHP {
                 matrix[i][j] /= sumcolumn[j];//normaliza la matriz
                 acum += matrix[i][j];
             } 
-            average[i] = acum/matrix.length;            
-            outputlog += "ALTERNATIVA "+(i+1)+": "+String.valueOf(average[i])+"\n";
+            average[i] = acum/matrix.length;        
+            if( alternative )
+                outputlog += "ALTERNATIVA "+(i+1)+": "+String.valueOf(average[i])+"\n";
+            else
+                outputlog += "CRITERIO "+arrayCriteria[i].toUpperCase().split(":")[0]+": "+String.valueOf(average[i])+"\n";
             acum = 0;
         }
         return average;
     }
     
-    public double[] calculatePrioritiesVector( double matrix[][] ){
+    public double[] calculatePrioritiesVector( double matrix[][],String arrayCriteria[], boolean alternative ){
         outputlog += "VECTOR DE PRIORIDADES: \n\n";        
         double []sumcolumn = calculateSumOfColumns(matrix);
-        double []prioritiesVector = calculateRowAverage(matrix,sumcolumn);        
+        double []prioritiesVector = calculateRowAverage(matrix,sumcolumn,arrayCriteria,alternative);        
         outputlog += "\n";        
         return prioritiesVector;
     }
@@ -78,30 +78,45 @@ public class AHP {
         if( criterion[i] <= criterion[j] ){
             if( arrayCriteria[numCriterion].split(":")[1].equalsIgnoreCase("min") ){
                 MatrixPairwiseComparison[i][j] = preferencelevel;//minimizar
-                outputlog += String.valueOf(MatrixPairwiseComparison[i][j])+"  ";
+                outputlog += new BigDecimal(MatrixPairwiseComparison[i][j]).setScale(3, BigDecimal.ROUND_HALF_EVEN).toString()+"  ";
             }else{
                 MatrixPairwiseComparison[i][j] = 1/preferencelevel;//maximizar
-                outputlog += String.valueOf(MatrixPairwiseComparison[i][j])+"  ";
+                outputlog += new BigDecimal(MatrixPairwiseComparison[i][j]).setScale(3, BigDecimal.ROUND_HALF_EVEN).toString()+"  ";
             }
         }else{
             if( arrayCriteria[numCriterion].split(":")[1].equalsIgnoreCase("min") ){
                 MatrixPairwiseComparison[i][j] = 1/preferencelevel;//minimizar
-                outputlog += String.valueOf(MatrixPairwiseComparison[i][j])+"  ";
+                outputlog += new BigDecimal(MatrixPairwiseComparison[i][j]).setScale(3, BigDecimal.ROUND_HALF_EVEN).toString()+"  ";
             }else{
                 MatrixPairwiseComparison[i][j] = preferencelevel;//maximizar
-                outputlog += String.valueOf(MatrixPairwiseComparison[i][j])+"  ";
+                outputlog += new BigDecimal(MatrixPairwiseComparison[i][j]).setScale(3, BigDecimal.ROUND_HALF_EVEN).toString()+"  ";
             }
         }        
     }
 
-    public double[][] calculateMatrixPairwiseComparison( double criterion[], String []arrayCriteria, int numCriterion ){
-        outputlog += "-----------------------------------------------------------------------------------------------\n";
+    public void matrixFormat( double criterion[], String []arrayCriteria, int numCriterion ){
+        outputlog += "--------------------------------------------------------------------------------------------\n";
         outputlog += " CRITERIO : "+arrayCriteria[numCriterion].toUpperCase().split(":")[0]+"\n"; 
-        outputlog += "-----------------------------------------------------------------------------------------------\n\n";
-        outputlog += " MATRIZ DE COMPARACION POR PARES - ALTERNATIVAS: \n\n";                
+        outputlog += "--------------------------------------------------------------------------------------------\n\n";
+        outputlog += " MATRIZ DE COMPARACION POR PARES - ALTERNATIVAS: \n\n";
+        outputlog += "              A1";
+        for (int i = 2; i <= criterion.length; i++){ 
+            outputlog += "        A"+i;                   
+        }
+        outputlog += "\n";
+        outputlog += "       -------------";
+        for (int i = 2; i <= criterion.length; i++){ 
+            outputlog += "---------";   
+        }
+        outputlog += "\n";
+    }
+    
+    public double[][] calculateMatrixPairwiseComparison( double criterion[], String []arrayCriteria, int numCriterion ){
+        matrixFormat(criterion, arrayCriteria, numCriterion);
         double value = 0,preferencelevel=0;
         double [][]MatrixPairwiseComparison = new double[criterion.length][criterion.length];                
         for (int i = 0; i < criterion.length; i++) {
+            outputlog += "A"+(i+1)+"   |  ";
             for (int j = 0; j < criterion.length; j++) {
                 if( criterion[i] >= criterion[j] ){
                     value = 100 - criterion[j]*100/criterion[i];
@@ -134,8 +149,9 @@ public class AHP {
     }
     
     public double[] calculateResult( double matrixfinal[][], double vectorPriorityCriteria[] , JTable alternatives){
-        outputlog += "-----------------------------------------------------------------------------------------------\n";        
-        outputlog += " VECTOR DE PRIORIDAD GLOBAL: \n\n";        
+        outputlog += "--------------------------------------------------------------------------------------------\n";        
+        outputlog += " VECTOR DE PRIORIDAD GLOBAL: \n";
+        outputlog += "--------------------------------------------------------------------------------------------\n";                        
         double finalresult[] = new double[alternatives.getRowCount()], acum = 0;
         for (int i = 0; i < alternatives.getRowCount(); i++) {
             for (int j = 0; j < alternatives.getColumnCount()-1; j++) {

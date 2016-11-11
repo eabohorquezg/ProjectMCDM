@@ -19,7 +19,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author Edwin
  */
 
-
 public class AHPResultsWindow extends JFrame{
     
     private JPanel panelGraphResults = new JPanel();
@@ -37,9 +36,9 @@ public class AHPResultsWindow extends JFrame{
 
     public void showResultsInTextArea( String outputlog ){         
         textareaResults = new JTextArea();            
-        textareaResults.append("-----------------------------------------------------------------------------------------------\n");
+        textareaResults.append("--------------------------------------------------------------------------------------------\n");
         textareaResults.append("RESULTADOS: \n");
-        textareaResults.append("-----------------------------------------------------------------------------------------------\n\n");
+        textareaResults.append("--------------------------------------------------------------------------------------------\n\n");
         textareaResults.append(outputlog);     
         scrollpane = new JScrollPane(textareaResults);
         scrollpane.setBounds(5,5,400,500);        

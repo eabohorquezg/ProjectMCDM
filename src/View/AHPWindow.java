@@ -196,7 +196,7 @@ public class AHPWindow extends javax.swing.JFrame {
         AHP ahp = new AHP();
         double [][]matrixcriteria = ahp.createMatrix(tableCriteria);        
         double [][]matrixalternatives = ahp.createMatrix(tableAlternatives);
-        double []vectorPriorityCriteria = ahp.calculatePrioritiesVector(matrixcriteria);                       
+        double []vectorPriorityCriteria = ahp.calculatePrioritiesVector(matrixcriteria,arrayCriteria,false);                       
         double matrixfinal[][] = new double[tableAlternatives.getRowCount()][tableAlternatives.getColumnCount()-1];        
         for( int z=0; z < tableAlternatives.getColumnCount()-1 ;z++ ){
             double []criterion = new double[tableAlternatives.getRowCount()];
@@ -204,7 +204,7 @@ public class AHPWindow extends javax.swing.JFrame {
                 criterion[i] = matrixalternatives[i][z];    
             }
             double matrixPairwiseComparison[][] = ahp.calculateMatrixPairwiseComparison(criterion, arrayCriteria, z);
-            double priorityVector[] = ahp.calculatePrioritiesVector(matrixPairwiseComparison);                                
+            double priorityVector[] = ahp.calculatePrioritiesVector(matrixPairwiseComparison,arrayCriteria,true);                       
             for (int i = 0; i < priorityVector.length; i++) {
                 matrixfinal[i][z] = priorityVector[i];                
             }
