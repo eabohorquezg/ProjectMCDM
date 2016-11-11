@@ -3,6 +3,7 @@ package Model;
 import View.PrometheeWindow;
 import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -28,6 +29,41 @@ public class Promethee {
     private double [][] preferenceIndex;
     private double []  posFlux;
     private double [] negFlux;
+    private static final int OUTRANKS = 1;
+    private static final int INDIFERENT = 2;
+    private static final int INCOMPARABLE = 3;
+    
+    private boolean pplus(int a, int b){
+        return posFlux[a]>posFlux[b];
+    }
+    
+    private boolean pminus(int a, int b){
+        return negFlux[a]<negFlux[b];
+    }
+    
+    private boolean iplus(int a, int b){
+        return Math.abs(posFlux[a]-posFlux[b]) < 1e-7;
+    }
+    
+    private boolean iminus(int a, int b){
+        return Math.abs(negFlux[a]-negFlux[b]) < 1e-7;
+    }
+    
+    private int relation(int a, int b){
+        boolean pp = pplus(a, b);
+        boolean pm = pminus(a, b);
+        boolean ip = iplus(a, b);
+        boolean im = iminus(a, b);
+        
+        if( (pp && pm) || (pp && im) || (ip && pm)){
+            return OUTRANKS;
+        }else if(ip && im){
+            return INDIFERENT;
+        }else{
+            return INCOMPARABLE;
+        }
+    }
+    
     
     private double compare(Alternative a, Alternative b){
         double ans = 0.0;
@@ -113,7 +149,24 @@ public class Promethee {
     }
 
     public Map<Alternative, List<Alternative>> getPartialOrder() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        Map<Alternative, List<Alternative>> partialOrder = new HashMap<>();
+        computeFlows();
+        
+        int n = alternatives.size();
+        for(int i=0 ; i<n ; i++){
+            ArrayList<Alternative> adjacencyList = new ArrayList<>();
+            partialOrder.put(alternatives.get(i), adjacencyList);
+            for(int j=0 ; j<n ; j++){
+                if(i!=j){
+                    if(relation(i, j) == OUTRANKS){
+                        adjacencyList.add(alternatives.get(j));
+                    }
+                }
+            }
+        }
+        
+        
+        return partialOrder;
     }
 
     public void addCriterion(Criterion criterion) {
