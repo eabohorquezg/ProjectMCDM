@@ -7,6 +7,7 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -59,6 +60,22 @@ public class Alternative {
 
     public void addValue(double parseDouble) {
         this.values.add(parseDouble);
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Alternative){
+            Alternative aux = (Alternative)o;
+            return this.name.equals(aux.name);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.name);
+        return hash;
     }
     
 }

@@ -20,13 +20,16 @@ import static org.junit.Assert.*;
  */
 import Model.Promethee;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-public class NewEmptyJUnitTest {
+public class TestPromethee {
 
     private Promethee promethee;
 
-    public NewEmptyJUnitTest() {
+    public TestPromethee() {
     }
 
     @BeforeClass
@@ -107,6 +110,7 @@ public class NewEmptyJUnitTest {
         List<Alternative> alternatives = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             Alternative alternative = new Alternative();
+            alternative.setName("a"+(i+1));
             for (int j = 0; j < n; j++) {
                 alternative.addValue(mat[j][i]);
             }
@@ -150,35 +154,99 @@ public class NewEmptyJUnitTest {
         double [] rightPosFlows = {1.099,1.980,1.234,1.644,2.274,1.500};
         double [] rightNegFlows = {1.827,1.895,1.681,1.746,0.808,1.774};
         
-        System.out.println("Neg correct: ");
+        /*System.out.println("Neg correct: ");
         for(int i=0 ; i<rightPosFlows.length ; i++){
             System.out.print(rightNegFlows[i]+" ");
         }System.out.println("");
         
         System.out.println("Neg out: ");
         for(int i=0 ; i<rightPosFlows.length ; i++){
-            System.out.print(promethee.getNegFlux()[i]+" ");
+            System.out.printf("%5.3f ",promethee.getNegFlux()[i]);
         }System.out.println("");
         
         System.out.println("Pos right: ");
         for(int i=0 ; i<rightPosFlows.length ; i++){
-            System.out.print(rightPosFlows[i]+" ");
+            System.out.printf("%5.3f ",rightPosFlows[i]);
         }System.out.println("");
         
         
         System.out.println("Pos out: ");
         for(int i=0 ; i<rightPosFlows.length ; i++){
-            System.out.print(promethee.getPosFlux()[i]+" ");
-        }System.out.println("");
+            System.out.printf("%5.3f ",promethee.getPosFlux()[i]);
+        }System.out.println("");*/
         
         for(int i=0 ; i<rightPosFlows.length ; i++){
-            System.out.println("Neg = " + rightNegFlows[i]+ " " + promethee.getNegFlux()[i]);
+            //System.out.println("Neg = " + rightNegFlows[i]+ " " + promethee.getNegFlux()[i]);
             assertFalse(Math.abs(rightNegFlows[i]-promethee.getNegFlux()[i]) > 0.01);
-            System.out.println("Pos = " + rightPosFlows[i]+" "+promethee.getPosFlux()[i]);
+            //System.out.println("Pos = " + rightPosFlows[i]+" "+promethee.getPosFlux()[i]);
             assertFalse(Math.abs(rightPosFlows[i]-promethee.getPosFlux()[i]) > 0.01);
         }
     
     }
+    
+    @Test
+    public void testTotalOrder(){
+        String [] correct = {"a5","a2","a4","a6","a3","a1"};
+        List<Alternative> alternatives = promethee.getTotalOrder();
+        assertTrue(correct.length == alternatives.size());
+        for(int i=0 ; i<correct.length ; i++){
+            //System.out.println(a.getName());
+            assertTrue(correct[i].equals(alternatives.get(i).getName()));
+        }        
+    }
+    
+    
+    @Test
+    public void testPartialOrder(){
+        
+        Map<Alternative, List<Alternative> > graph = promethee.getPartialOrder();
+        
+        Alternative a1 = new Alternative();
+        a1.setName("a1");
+        
+        Alternative a2 = new Alternative();
+        a2.setName("a2");
+        
+        Alternative a3 = new Alternative();
+        a3.setName("a3");
+        
+        Alternative a4 = new Alternative();
+        a4.setName("a4");
+        
+        Alternative a5 = new Alternative();
+        a5.setName("a5");
+        
+        Alternative a6 = new Alternative();
+        a6.setName("a6");
+        
+        assert(graph.containsKey(a1));
+        assert(graph.containsKey(a2));
+        assert(graph.containsKey(a3));
+        assert(graph.containsKey(a4));
+        assert(graph.containsKey(a5));
+        assert(graph.containsKey(a6));
+        
+        assert(graph.get(a5).size() == 3);
+        assert(graph.get(a5).contains(a4));
+        assert(graph.get(a5).contains(a3));
+        assert(graph.get(a5).contains(a2));
+        
+        assert(graph.get(a4).size() == 1);
+        assert(graph.get(a4).contains(a6));
+
+        assert(graph.get(a2).isEmpty());
+       
+        assert(graph.get(a1).isEmpty());
+        
+        assert(graph.get(a6).size() == 1);
+        assert(graph.get(a6).contains(a1));
+        
+        assert(graph.get(a3).size() == 1);
+        assert(graph.get(a3).contains(a1));
+        
+    }
+    
+    
     
     
 }

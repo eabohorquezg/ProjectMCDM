@@ -6,6 +6,7 @@ import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -86,10 +87,29 @@ public class Promethee {
     
     
     public List<Alternative> getTotalOrder() {
-        System.out.println(criteria);
-        System.out.println(getAlternatives());
+        //System.out.println(criteria);
+        //System.out.println(getAlternatives());
+        List<Alternative> sorted = new ArrayList<>();
         computeFlows();
-        return null;
+        
+        TreeMap<Double,Alternative> map = new TreeMap<>();
+        for(int i=0 ; i<this.alternatives.size() ; i++){
+            Alternative a = this.alternatives.get(i);
+            map.put(posFlux[i]-negFlux[i], a);
+        }
+        
+        ArrayList<Alternative> aux = new ArrayList<>();
+        
+        
+        map.entrySet().stream().forEach((e) -> {
+            aux.add(e.getValue());
+        });
+        
+        for(int i=aux.size()-1 ; i>=0 ; i--){
+            sorted.add(aux.get(i));
+        }
+        
+        return sorted;
     }
 
     public Map<Alternative, List<Alternative>> getPartialOrder() {
