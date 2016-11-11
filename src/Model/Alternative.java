@@ -16,7 +16,10 @@ import java.util.Objects;
 public class Alternative {
     private String name;
     private List<Double> values;
-
+    private double posFlux;
+    private double negFlux;
+    private double netFlux;
+    
     public Alternative(){
         name = "";
         values = new ArrayList<>();
@@ -76,6 +79,48 @@ public class Alternative {
         int hash = 5;
         hash = 83 * hash + Objects.hashCode(this.name);
         return hash;
+    }
+
+    /**
+     * @return the posFlux
+     */
+    public double getPosFlux() {
+        return posFlux;
+    }
+
+    /**
+     * @param posFlux the posFlux to set
+     */
+    public void setPosFlux(double posFlux) {
+        this.posFlux = posFlux;
+    }
+
+    /**
+     * @return the negFlux
+     */
+    public double getNegFlux() {
+        return negFlux;
+    }
+
+    /**
+     * @param negFlux the negFlux to set
+     */
+    public void setNegFlux(double negFlux) {
+        this.negFlux = negFlux;
+    }
+
+    /**
+     * @return the netFlux
+     */
+    public double getNetFlux() {
+        return netFlux;
+    }
+
+    /**
+     * @param netFlux the netFlux to set
+     */
+    public void setNetFlux(double netFlux) {
+        this.netFlux = netFlux;
     }
     
 }

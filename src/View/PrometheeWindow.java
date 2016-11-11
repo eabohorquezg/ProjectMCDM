@@ -258,7 +258,9 @@ public class PrometheeWindow extends javax.swing.JFrame {
             alternatives.add(alternative);
         }
         promethee.setAlternatives(alternatives);
-        promethee.getTotalOrder();
+        SolutionVisualizer solutionVisualizer = new SolutionVisualizer(promethee.getTotalOrder(),promethee.getPartialOrder());
+        solutionVisualizer.setVisible(true);
+        solutionVisualizer.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

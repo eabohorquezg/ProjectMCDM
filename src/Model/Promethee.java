@@ -111,6 +111,7 @@ public class Promethee {
             for(int j=0 ; j<n ; j++){
                 posFlux[i]+=getPreferenceIndex()[i][j];
             }
+            alternatives.get(i).setPosFlux(posFlux[i]);
         }
         
         for(int i=0 ; i<n ; i++){
@@ -118,6 +119,8 @@ public class Promethee {
             for(int j=0 ; j<n ; j++){
                 negFlux[i]+=getPreferenceIndex()[j][i];
             }
+            alternatives.get(i).setNegFlux(negFlux[i]);
+            alternatives.get(i).setNetFlux(posFlux[i]-negFlux[i]);
         }
     }
     
