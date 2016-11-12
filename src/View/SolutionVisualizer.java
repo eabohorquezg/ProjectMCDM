@@ -227,5 +227,9 @@ public class SolutionVisualizer extends javax.swing.JFrame {
         
         partialOrderTextArea.setText(sb1.toString());
         
+        GraphVisual graphVisual = new GraphVisual(partialPreorder);
+        graphVisual.pack();
+        graphVisual.setVisible(true);
+        
     }
 }
