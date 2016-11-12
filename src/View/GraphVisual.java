@@ -15,6 +15,8 @@ import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Paint;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -68,14 +70,25 @@ public class GraphVisual extends JFrame {
                 g.addEdge(a.getName() + e.getName(), a.getName(), e.getName());
             }*/
         }
-
         visited.clear();
+
+        ArrayList<Alternative> alternatives = new ArrayList<>();
+        alternatives.addAll(graph.keySet());
+        Collections.sort(alternatives);
+        
+        for(Alternative a : alternatives){
+            if(!visited.contains(a)){
+                dfs(a,false);
+            }
+        }
+        
+        /*
         while(!s.empty()){
             if(!visited.contains(s.peek())){
                 dfs(s.peek(),false);
             }
             s.pop();
-        }
+        }*/
         
         Layout<String, String> layout = new CircleLayout(g);
         layout.setSize(new Dimension(370, 300));
