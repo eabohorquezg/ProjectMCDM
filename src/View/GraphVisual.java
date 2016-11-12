@@ -15,8 +15,11 @@ import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Paint;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
+import java.util.TreeSet;
 import javax.swing.JFrame;
 import org.apache.commons.collections15.Transformer;
 
@@ -28,7 +31,25 @@ public class GraphVisual extends JFrame {
 
     private Map<Alternative, List<Alternative>> graph;
     private DirectedGraph<String, String> g;
-
+    
+    private Stack<Alternative> s = new Stack<>();
+    private TreeSet<Alternative> visited = new TreeSet<>();
+    
+    private void dfs(Alternative node, boolean first){
+        //if(visited.contains(node)) return;
+        visited.add(node);
+        
+        for(Alternative nei : graph.get(node)){
+            if(!visited.contains(nei)){
+                if(!first)
+                    g.addEdge(node.getName()+nei.getName(), node.getName(),nei.getName());
+                dfs(nei,first);
+            }
+        }
+        
+        if(first)s.add(node);
+    }
+    
     public GraphVisual(Map<Alternative, List<Alternative>> graph) {
         super("Solución PROMETHEE 2");
         this.graph = graph;
@@ -40,15 +61,27 @@ public class GraphVisual extends JFrame {
 
         for (Alternative a : graph.keySet()) {
             g.addVertex(a.getName());
-            for (Alternative e : graph.get(a)) {
-                g.addEdge(a.getName() + e.getName(), a.getName(), e.getName());
+            if(!visited.contains(a)){
+                dfs(a,true);
             }
+            /*for (Alternative e : graph.get(a)) {
+                g.addEdge(a.getName() + e.getName(), a.getName(), e.getName());
+            }*/
         }
 
+        visited.clear();
+        while(!s.empty()){
+            if(!visited.contains(s.peek())){
+                dfs(s.peek(),false);
+            }
+            s.pop();
+        }
+        
         Layout<String, String> layout = new CircleLayout(g);
         layout.setSize(new Dimension(370, 300));
 
         Transformer<String, Paint> vertexPaint = new Transformer<String, Paint>() {
+            @Override
             public Paint transform(String i) {
                 return Color.GREEN;
             }
