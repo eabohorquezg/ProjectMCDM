@@ -55,7 +55,7 @@ public class PrometheeWindow extends javax.swing.JFrame {
             c.setMax(true);
             c.setName("Calidad");
             c.setType(3);
-            c.addParam("m", 10);
+            c.addParam("m", 3);
             c.setWeight(0.25);
             criteria.add(c);
             
@@ -63,7 +63,7 @@ public class PrometheeWindow extends javax.swing.JFrame {
             c.setMax(true);
             c.setName("Confiabilidad");
             c.setType(3);
-            c.addParam("m", 10);
+            c.addParam("m", 3);
             c.setWeight(0.25);
             criteria.add(c);
             
