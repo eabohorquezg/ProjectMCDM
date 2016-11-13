@@ -14,13 +14,23 @@ import javax.swing.JTable;
  */
 
 public class AHP {
-    
+
+    private double matrixCriteria[][];
+    private double matrixAlternatives[][];
+    private double globalPriorityVector[];
     private String outputlog;
-    
-    public AHP(){
-        outputlog = "";
+     
+    public AHP( JTable tableCriteria,JTable tableAlternatives ){
+        matrixCriteria = createMatrix(tableCriteria);
+        matrixAlternatives = createMatrix(tableAlternatives);
+        globalPriorityVector = new double[tableAlternatives.getRowCount()];
+        outputlog = "";                
     }
-            
+
+    public double[] getGlobalPriorityVector() {
+        return globalPriorityVector;
+    }                
+    
     public String getOutputlog(){
         return outputlog;
     }
@@ -148,20 +158,36 @@ public class AHP {
         return preferencelevel;
     }
     
-    public double[] calculateResult( double matrixfinal[][], double vectorPriorityCriteria[] , JTable alternatives){
+    public void calculateResult( double matrixfinal[][], double vectorPriorityCriteria[] , JTable alternatives){
         outputlog += "--------------------------------------------------------------------------------------------\n";        
         outputlog += " VECTOR DE PRIORIDAD GLOBAL: \n";
         outputlog += "--------------------------------------------------------------------------------------------\n";                        
-        double finalresult[] = new double[alternatives.getRowCount()], acum = 0;
+        double acum = 0;
         for (int i = 0; i < alternatives.getRowCount(); i++) {
             for (int j = 0; j < alternatives.getColumnCount()-1; j++) {
                 acum += matrixfinal[i][j]*vectorPriorityCriteria[j];
             }
-            finalresult[i] = acum;
-            outputlog += "ALTERNATIVA "+(i+1)+": "+String.valueOf(finalresult[i])+"\n";
+            globalPriorityVector[i] = acum;
+            outputlog += "ALTERNATIVA "+(i+1)+": "+String.valueOf(globalPriorityVector[i])+"\n";
             acum = 0;
+        }        
+    }
+    
+    public void applyAHP( String arrayCriteria[], JTable tableAlternatives ){
+        double []vectorPriorityCriteria = calculatePrioritiesVector(matrixCriteria,arrayCriteria,false);                       
+        double matrixfinal[][] = new double[tableAlternatives.getRowCount()][tableAlternatives.getColumnCount()-1];        
+        for( int z=0; z < tableAlternatives.getColumnCount()-1 ;z++ ){
+            double []criterion = new double[tableAlternatives.getRowCount()];
+            for (int i = 0; i < tableAlternatives.getRowCount(); i++) {
+                criterion[i] = matrixAlternatives[i][z];    
+            }
+            double matrixPairwiseComparison[][] = calculateMatrixPairwiseComparison(criterion, arrayCriteria, z);
+            double priorityVector[] = calculatePrioritiesVector(matrixPairwiseComparison,arrayCriteria,true);                       
+            for (int i = 0; i < priorityVector.length; i++) {
+                matrixfinal[i][z] = priorityVector[i];                
+            }
         }
-        return finalresult;
+        calculateResult(matrixfinal, vectorPriorityCriteria, tableAlternatives);      
     }
         
 }

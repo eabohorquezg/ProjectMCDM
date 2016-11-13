@@ -37,13 +37,15 @@ public class AHPWindow extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableAlternatives = new javax.swing.JTable();
         labelAlternatives = new javax.swing.JLabel();
-        btnfindAlternative = new javax.swing.JButton();
+        btnApplyAHP = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         textareaCriteria = new javax.swing.JTextArea();
         labelCriteria = new javax.swing.JLabel();
         btncreateCriteriaTable = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableCriteria = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,10 +74,10 @@ public class AHPWindow extends javax.swing.JFrame {
 
         labelAlternatives.setText("Alternativas:");
 
-        btnfindAlternative.setText("Encontrar Alernativa");
-        btnfindAlternative.addActionListener(new java.awt.event.ActionListener() {
+        btnApplyAHP.setText("Aplicar AHP");
+        btnApplyAHP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnfindAlternativeActionPerformed(evt);
+                btnApplyAHPActionPerformed(evt);
             }
         });
 
@@ -107,6 +109,10 @@ public class AHPWindow extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tableCriteria);
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/scaleAHP.png"))); // NOI18N
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/logoAHP.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,25 +121,34 @@ public class AHPWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelAlternatives, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(numAlternatives, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(31, 31, 31)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(16, 16, 16))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelCriteria)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btncreateCriteriaTable, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(numAlternatives, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
                                 .addComponent(btncreateAlternativesTable))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelCriteria)
-                            .addComponent(btncreateCriteriaTable, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(labelAlternatives, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(122, 122, 122))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(226, 226, 226)
-                .addComponent(btnfindAlternative)
+                .addGap(253, 253, 253)
+                .addComponent(btnApplyAHP)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -142,22 +157,32 @@ public class AHPWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(labelCriteria)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(btncreateCriteriaTable)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(labelAlternatives)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(numAlternatives, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btncreateAlternativesTable))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnfindAlternative)
-                .addGap(23, 23, 23))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                        .addGap(13, 13, 13)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btncreateAlternativesTable))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btncreateCriteriaTable)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                                .addComponent(labelAlternatives)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(numAlternatives, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnApplyAHP)
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -167,6 +192,7 @@ public class AHPWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_numAlternativesActionPerformed
 
+    private String []arrayCriteria;  
     
     private void btncreateAlternativesTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncreateAlternativesTableActionPerformed
         // TODO add your handling code here:        
@@ -191,29 +217,13 @@ public class AHPWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btncreateAlternativesTableActionPerformed
 
-    private void btnfindAlternativeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnfindAlternativeActionPerformed
+    private void btnApplyAHPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyAHPActionPerformed
         // TODO add your handling code here:                          
-        AHP ahp = new AHP();
-        double [][]matrixcriteria = ahp.createMatrix(tableCriteria);        
-        double [][]matrixalternatives = ahp.createMatrix(tableAlternatives);
-        double []vectorPriorityCriteria = ahp.calculatePrioritiesVector(matrixcriteria,arrayCriteria,false);                       
-        double matrixfinal[][] = new double[tableAlternatives.getRowCount()][tableAlternatives.getColumnCount()-1];        
-        for( int z=0; z < tableAlternatives.getColumnCount()-1 ;z++ ){
-            double []criterion = new double[tableAlternatives.getRowCount()];
-            for (int i = 0; i < tableAlternatives.getRowCount(); i++) {
-                criterion[i] = matrixalternatives[i][z];    
-            }
-            double matrixPairwiseComparison[][] = ahp.calculateMatrixPairwiseComparison(criterion, arrayCriteria, z);
-            double priorityVector[] = ahp.calculatePrioritiesVector(matrixPairwiseComparison,arrayCriteria,true);                       
-            for (int i = 0; i < priorityVector.length; i++) {
-                matrixfinal[i][z] = priorityVector[i];                
-            }
-        }
-        double finalresult[] = ahp.calculateResult(matrixfinal, vectorPriorityCriteria, tableAlternatives);                                            
-        new AHPResultsWindow(ahp.getOutputlog(),finalresult);                
-    }//GEN-LAST:event_btnfindAlternativeActionPerformed
-        
-    private String []arrayCriteria;    
+        AHP ahp = new AHP(tableCriteria,tableAlternatives);
+        ahp.applyAHP(arrayCriteria, tableAlternatives);
+        new AHPResultsWindow(ahp.getOutputlog(),ahp.getGlobalPriorityVector());                
+    }//GEN-LAST:event_btnApplyAHPActionPerformed
+              
     
     private void btncreateCriteriaTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncreateCriteriaTableActionPerformed
         // TODO add your handling code here:
@@ -290,9 +300,11 @@ public class AHPWindow extends javax.swing.JFrame {
 //    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnApplyAHP;
     private javax.swing.JButton btncreateAlternativesTable;
     private javax.swing.JButton btncreateCriteriaTable;
-    private javax.swing.JButton btnfindAlternative;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
