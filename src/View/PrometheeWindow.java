@@ -36,35 +36,42 @@ public class PrometheeWindow extends javax.swing.JFrame {
             List<Criterion> criteria = new ArrayList<>();
             Criterion c = new Criterion();
             c.setMax(false);
-            c.setName("Precio");
+            c.setName("Costo");
             c.setType(2);
-            c.addParam("l", 300);
-            c.setWeight(0.25);
+            c.addParam("l", 20000);
+            c.setWeight(0.30);
             criteria.add(c);
             
             c = new Criterion();
             c.setMax(false);
-            c.setName("Tiempo");
+            c.setName("Tiempo de tansporte");
             c.addParam("p", 3);
             c.addParam("q", 6);
             c.setType(4);
-            c.setWeight(0.25);
+            c.setWeight(0.20);
             criteria.add(c);
             
             c = new Criterion();
             c.setMax(true);
-            c.setName("Calidad");
+            c.setName("Capacidad");
             c.setType(3);
-            c.addParam("m", 3);
-            c.setWeight(0.25);
+            c.addParam("m", 100);
+            c.setWeight(0.20);
             criteria.add(c);
             
             c = new Criterion();
             c.setMax(true);
-            c.setName("Confiabilidad");
-            c.setType(3);
-            c.addParam("m", 3);
-            c.setWeight(0.25);
+            c.setName("Cumplimiento");
+            c.setType(2);
+            c.addParam("l",5);
+            c.setWeight(0.20);
+            criteria.add(c);
+            
+            c = new Criterion();
+            c.setMax(false);
+            c.setName("Impacto ambiental");
+            c.setType(1);
+            c.setWeight(0.10);
             criteria.add(c);
             
             promethee.setCriteria(criteria);
@@ -359,8 +366,8 @@ public class PrometheeWindow extends javax.swing.JFrame {
     }
 
     private void setUpTable() {
-        int numberOfAlternatives = 5;
-        nalt.setText(5+"");
+        int numberOfAlternatives = 4;
+        nalt.setText(numberOfAlternatives+"");
         int numberOfCriterion = promethee.getCriteria().size();
         DefaultTableModel defaultTableModel = new DefaultTableModel();
         
@@ -371,14 +378,51 @@ public class PrometheeWindow extends javax.swing.JFrame {
         
         double [] limit = {10000,30,10,10};
         
-        for(int i=0 ; i<numberOfAlternatives ; i++){
-            Object [] aux = new Object[numberOfCriterion+1];
+        Object [] aux = new Object[numberOfCriterion+1];
+        aux[0] = "CAMFRI S. A";
+        aux[1] = 420000;
+        aux[2] = 36;
+        aux[3] = 1000;
+        aux[4] = 93;
+        aux[5] = 2;
+        defaultTableModel.addRow(aux);
+        
+        aux = new Object[numberOfCriterion+1];
+        aux[0] = "LIANCAR ltda";
+        aux[1] = 500000;
+        aux[2] = 36;
+        aux[3] = 2000;
+        aux[4] = 96;
+        aux[5] = 1;
+        defaultTableModel.addRow(aux);
+        
+        aux = new Object[numberOfCriterion+1];
+        aux[0] = "AsTransportes";
+        aux[1] = 400000;
+        aux[2] = 48;
+        aux[3] = 1500;
+        aux[4] = 90;
+        aux[5] = 1;
+        defaultTableModel.addRow(aux);
+        
+        aux = new Object[numberOfCriterion+1];
+        aux[0] = "AGROTRANS";
+        aux[1] = 450000;
+        aux[2] = 40;
+        aux[3] = 1600;
+        aux[4] = 91;
+        aux[5] = 2;
+        defaultTableModel.addRow(aux);
+        
+        
+        /*for(int i=0 ; i<numberOfAlternatives ; i++){
+          Object [] aux = new Object[numberOfCriterion+1];
             aux[0] = "Proveedor " + (i+1);
             for(int j=1 ; j<=numberOfCriterion ; j++){
                 aux[j] = (int)(Math.random()*limit[j-1] + 1);
             }
             defaultTableModel.addRow(aux);
-        }
+        }*/
  
        
         

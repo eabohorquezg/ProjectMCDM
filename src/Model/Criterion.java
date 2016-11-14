@@ -129,7 +129,7 @@ public class Criterion {
     public String toString() {
         String max = "max";
         if(!this.max) max = "min";
-        return String.format("%-15s%-6s%-6s%-9s%-20s\n", name, type, weight, max, params);
+        return String.format("%-25s%-6s%-6s%-9s%-20s\n", name, type, weight, max, params);
     }   
 
     /**

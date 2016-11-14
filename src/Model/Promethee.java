@@ -170,7 +170,7 @@ public class Promethee {
 
     public void updateView() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-15s%-6s%-6s%-9s%-20s\n", "Nombre", "Tipo", "Peso", "Min/Max","Parámetros"));
+        sb.append(String.format("%-25s%-6s%-6s%-9s%-20s\n", "Nombre", "Tipo", "Peso", "Min/Max","Parámetros"));
         sb.append("------------------------------------------------------------\n");
         getCriteria().stream().forEach((c) -> {
             sb.append(c);
