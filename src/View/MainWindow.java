@@ -130,11 +130,9 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnApplyAHPActionPerformed
 
     private void btnApplyPrometheeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyPrometheeActionPerformed
-        /*
         PrometheeWindow prometheewindow = new PrometheeWindow();
         prometheewindow.setVisible(true);
         prometheewindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);        
-        */
     }//GEN-LAST:event_btnApplyPrometheeActionPerformed
 
     /**
